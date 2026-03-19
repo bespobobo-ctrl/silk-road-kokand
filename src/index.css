@@ -2769,30 +2769,76 @@ body {
   }
 
   .hero-intareo {
-    padding-top: 150px;
-    padding-bottom: 80px;
-    height: auto;
-    min-height: 100vh;
-  }
-
-  .hero-title-intareo {
-    font-size: 3.2rem !important;
-    line-height: 1.1 !important;
-    letter-spacing: -1px !important;
-    text-align: center !important;
+    padding-top: 80px;
+    padding-bottom: 40px;
+    height: 100vh !important;
+    height: 100dvh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
   }
 
   .hero-content-grid {
     grid-template-columns: 1fr !important;
     transform: none !important;
     text-align: center !important;
-    gap: 50px !important;
+    gap: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
   }
 
-  .hero-image-block {
-    height: 400px !important;
-    border-radius: 32px !important;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+  .hero-text-block {
+    margin: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .hero-title-intareo {
+    font-size: 2.8rem !important;
+    margin-bottom: 20px !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+    letter-spacing: -1px !important;
+  }
+
+  .hero-text-block p {
+    font-size: 1.1rem !important;
+    margin-bottom: 40px !important;
+    max-width: 90% !important;
+    opacity: 0.7 !important;
+    text-align: center !important;
+  }
+
+  .hero-cta-group {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 16px !important;
+    margin-bottom: 50px !important;
+  }
+
+  .hero-cta-group button {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 20px !important;
+  }
+
+  .hero-visual-block {
+    display: none !important;
+  }
+
+  .glass-stats-panel-v2 {
+    gap: 24px !important;
+    padding: 24px !important;
+    width: 90% !important;
+    margin: 0 auto !important;
+    justify-content: center !important;
+    background: rgba(255, 255, 255, 0.05) !important;
   }
 
   /* Section Spacing & Titles */
