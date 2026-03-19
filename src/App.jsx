@@ -1479,14 +1479,14 @@ function App() {
 
       {/* 🏆 VIP TOAST */}
       <AnimatePresence>
-        {showVipToast && (
+        {!loading && showVipToast && (
           <motion.div className="vip-toast" initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -100, opacity: 0 }}>
             <div className="play-btn-pulse" style={{ width: '40px', height: '40px' }}><Sparkles size={16} color="white" /></div>
             <div>
               <div style={{ fontWeight: 800, fontSize: '12px', color: 'var(--primary)' }}>{t.vipTitle}</div>
-              <div style={{ fontSize: '11px', opacity: 0.8 }}>{t.vipDesc}</div>
+              <div style={{ fontSize: '11px', color: 'white' }}>{t.vipDesc}</div>
             </div>
-            <X size={16} style={{ cursor: 'pointer', marginLeft: '10px' }} onClick={() => setShowVipToast(false)} />
+            <X size={16} style={{ cursor: 'pointer', marginLeft: '10px', color: 'white' }} onClick={() => setShowVipToast(false)} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -1853,7 +1853,7 @@ function App() {
           </div>
         </div>
       </footer>
-      {isMobile && (
+      {!loading && isMobile && (
         <div className="mobile-bottom-nav">
           <a href="#" className={`mobile-bottom-tab ${activeTab === 0 ? 'active' : ''}`}>
             <Hotel size={20} />
