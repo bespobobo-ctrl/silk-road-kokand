@@ -459,20 +459,24 @@ body {
 .hero-image-wireframe {
   position: absolute;
   inset: -25px;
-  border: 1px solid rgba(194, 169, 139, 0.3);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(194, 169, 139, 0.25);
   border-radius: 40px;
   pointer-events: none;
   z-index: 0;
-  animation: frame-glow 4s infinite alternate ease-in-out;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(194, 169, 139, 0.1);
 }
 
 .hero-image-wireframe-inner {
   position: absolute;
   inset: -12px;
-  border: 1px dashed rgba(194, 169, 139, 0.2);
+  border: 1px solid rgba(194, 169, 139, 0.15);
   border-radius: 30px;
   pointer-events: none;
   z-index: 0;
+  box-shadow: 0 0 15px rgba(194, 169, 139, 0.05);
 }
 
 @keyframes frame-glow {
@@ -566,14 +570,13 @@ body {
 
 .corner-node {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border: 1px solid var(--primary);
-  background: rgba(194, 169, 139, 0.15);
-  backdrop-filter: blur(4px);
+  width: 14px;
+  height: 14px;
+  background: var(--primary);
+  border: 1px solid white;
+  box-shadow: 0 0 20px var(--primary);
   transform: rotate(45deg);
-  animation: node-pulse 3s infinite alternate ease-in-out;
-  z-index: 5;
+  z-index: 20;
 }
 
 .corner-tl {
