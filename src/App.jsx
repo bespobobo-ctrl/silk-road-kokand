@@ -656,6 +656,16 @@ function App() {
       tg.ready();
       tg.expand();
       tg.headerColor = "#0d0d0d";
+      tg.backgroundColor = "#0d0d0d";
+
+      // Main Button Premium Integration
+      tg.MainButton.setText("XONANI BRON QILISH");
+      tg.MainButton.setParams({
+        color: "#c2a98b",
+        text_color: "#ffffff"
+      });
+      tg.MainButton.onClick(() => setIsBookingOpen(true));
+      tg.MainButton.show();
     }
     return () => window.removeEventListener('resize', handleResize);
   }, []);
