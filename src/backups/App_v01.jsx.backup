@@ -1,0 +1,379 @@
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Instagram, Facebook, Car, Coffee, Wind, ShieldCheck,
+  Twitter, User, Maximize, Home, Wifi, Monitor, AirVent, Bath, Play, Clock, Cloud
+} from "lucide-react";
+import "./index.css";
+
+// --- PROFESSIONAL DATA ---
+const TRANSLATIONS = {
+  UZ: {
+    nav: ["Meros", "Xizmatlar", "Xonalar", "Aloqa"],
+    brand: "SILK ROAD KOKAND",
+    heroTitlePrefix: "Shaffoflik &",
+    heroTitleGold: "Hashamat.",
+    heroSub: "EXCEPTIONAL DESIGN",
+    heroDesc: "Qo'qon shahrining boy tarixi va zamonaviy hashamat uyg'unlashgan makon. Siz uchun maxsus yaratilgan tajriba.",
+    servicesTitle: "Eksklyuziv Xizmatlar",
+    roomsTitle: "Bizning Xonalar",
+    reserve: "BAND QILISH",
+    priceSub: "1 kecha uchun",
+    checkPrice: "Sanalarni tekshirish",
+    people: "kishi",
+    roomsCount: "xona",
+    loading: "Jarayon...",
+    kokand: "Qo'qon",
+    badgeLabel: "ELITE STAY",
+    stats: [
+      { num: "5*", label: "Oliy darajada" },
+      { num: "100+", label: "Eksklyuziv Suitlar" },
+      { num: "24/7", label: "Mukammal Xizmat" }
+    ],
+    rooms: [
+      { name: "Standart Bir Kishilik", price: "450,000", cap: "1", area: "25", rooms: "1" },
+      { name: "Standart Ikki Kishilik", price: "550,000", cap: "2", area: "35", rooms: "1" },
+      { name: "Superior Ikki Kishilik", price: "650,000", cap: "2", area: "40", rooms: "1" },
+      { name: "Superior Uch Kishilik", price: "850,000", cap: "3", area: "45", rooms: "1" },
+      { name: "Superior To'rt Kishilik", price: "1,100,000", cap: "4", area: "55", rooms: "1" },
+      { name: "Junior Suite", price: "1,300,000", cap: "2", area: "65", rooms: "1" },
+      { name: "Suite Luxe", price: "1,600,000", cap: "3", area: "80", rooms: "2" },
+      { name: "Executive Suite", price: "2,000,000", cap: "4", area: "100", rooms: "2" },
+      { name: "Grand Suite", price: "2,800,000", cap: "4", area: "135", rooms: "3" }
+    ],
+    services: [
+      { name: "VIP Transfer", icon: <Car />, desc: "Premium darajadagi kutib olish va kuzatib qo'yish." },
+      { name: "Elite Laundry", icon: <Wind />, desc: "Kiyimlaringiz uchun professional sifat va tezkorlik." },
+      { name: "Breakfast Buffet", icon: <Coffee />, desc: "Sharq va G'arb lazzatlari mujassam nonushta." },
+      { name: "Concierge 24/7", icon: <ShieldCheck />, desc: "Har qanday so'rovingiz uchun professional vordam." }
+    ]
+  },
+  RU: {
+    nav: ["История", "Услуги", "Номера", "Контакты"],
+    brand: "SILK ROAD KOKAND",
+    heroTitlePrefix: "Чистота &",
+    heroTitleGold: "Роскошь.",
+    heroSub: "EXCEPTIONAL DESIGN",
+    heroDesc: "Гармония древней истории и современной роскоши Коканда. Опыт, созданный для вас.",
+    servicesTitle: "Эксклюзивные Услуги",
+    roomsTitle: "Наши Номера",
+    reserve: "ЗАБРОНИРОВАТЬ",
+    priceSub: "за 1 ночь",
+    checkPrice: "Узнать цену",
+    people: "места",
+    roomsCount: "комн.",
+    loading: "Загрузка...",
+    kokand: "Коканд",
+    badgeLabel: "ЭЛИТНЫЙ КЛАСС",
+    stats: [
+      { num: "5*", label: "Высший класс" },
+      { num: "100+", label: "Элитные номера" },
+      { num: "24/7", label: "Полный сервис" }
+    ],
+    rooms: [
+      { name: "Стандарт Одноместный", price: "450,000", cap: "1", area: "25", rooms: "1" },
+      { name: "Стандарт Двухместный", price: "550,000", cap: "2", area: "35", rooms: "1" },
+      { name: "Супериор Двухместный", price: "650,000", cap: "2", area: "40", rooms: "1" },
+      { name: "Супериор Трехместный", price: "850,000", cap: "3", area: "45", rooms: "1" },
+      { name: "Супериор Четырехместный", price: "1,100,000", cap: "4", area: "55", rooms: "1" },
+      { name: "Джуниор Сюит", price: "1,300,000", cap: "2", area: "65", rooms: "1" },
+      { name: "Люкс", price: "1,600,000", cap: "3", area: "80", rooms: "2" },
+      { name: "Представительский Люкс", price: "2,000,000", cap: "4", area: "100", rooms: "2" },
+      { name: "Гранд Люкс", price: "2,800,000", cap: "4", area: "135", rooms: "3" }
+    ],
+    services: [
+      { name: "VIP Трансфер", icon: <Car />, desc: "Премиальный сервис встречи и проводов." },
+      { name: "Элитная Прачечная", icon: <Wind />, desc: "Профессиональный уход за вашими вещами." },
+      { name: "Завтрак Буфет", icon: <Coffee />, desc: "Завтрак в лучших традициях Востока и Запада." },
+      { name: "Консьерж 24/7", icon: <ShieldCheck />, desc: "Профессиональная поддержка по любому запросу." }
+    ]
+  },
+  EN: {
+    nav: ["History", "Services", "Rooms", "Contact"],
+    brand: "SILK ROAD KOKAND",
+    heroTitlePrefix: "Clarity &",
+    heroTitleGold: "Opulence.",
+    heroSub: "EXCEPTIONAL DESIGN",
+    heroDesc: "A fusion of ancient history and modern luxury. An experience crafted for you.",
+    servicesTitle: "Exclusive Services",
+    roomsTitle: "Our Residences",
+    reserve: "BOOK NOW",
+    priceSub: "per night",
+    checkPrice: "Check price",
+    people: "people",
+    roomsCount: "rooms",
+    loading: "Loading...",
+    kokand: "Kokand",
+    badgeLabel: "ELITE STAY",
+    stats: [
+      { num: "5*", label: "Hotel Rating" },
+      { num: "100+", label: "Exclusive Suites" },
+      { num: "24/7", label: "Full Concierge" }
+    ],
+    rooms: [
+      { name: "Standard Single", price: "450,000", cap: "1", area: "25", rooms: "1" },
+      { name: "Standard Twin", price: "550,000", cap: "2", area: "35", rooms: "1" },
+      { name: "Superior Twin", price: "650,000", cap: "2", area: "40", rooms: "1" },
+      { name: "Superior Triple", price: "850,000", cap: "3", area: "45", rooms: "1" },
+      { name: "Superior Quad", price: "1,100,000", cap: "4", area: "55", rooms: "1" },
+      { name: "Junior Suite", price: "1,300,000", cap: "2", area: "65", rooms: "1" },
+      { name: "Suite Luxe", price: "1,600,000", cap: "3", area: "80", rooms: "2" },
+      { name: "Executive Suite", price: "2,000,000", cap: "4", area: "100", rooms: "2" },
+      { name: "Grand Suite", price: "2,800,000", cap: "4", area: "135", rooms: "3" }
+    ],
+    services: [
+      { name: "VIP Transfer", icon: <Car />, desc: "Premium arrival and departure luxury service." },
+      { name: "Elite Laundry", icon: <Wind />, desc: "Professional and rapid care for your garments." },
+      { name: "Breakfast Buffet", icon: <Coffee />, desc: "Finest breakfast selection of Silk Road." },
+      { name: "Concierge 24/7", icon: <ShieldCheck />, desc: "Professional assistance for any request." }
+    ]
+  }
+};
+
+const ROOM_IMAGES = [
+  "https://silkroad-kokand.uz/img/123915fc51264554.webp",
+  "https://secure.exely.com/resource/thumb/1000x600/rt/5060666/638999277645967267-882ec1a2-18c2-4140-89c4-9f634b150fbe",
+  "https://secure.exely.com/resource/thumb/1000x600/rt/5060667/638999277676589453-289c959f-67f2-40b9-9886-769e6d8855ae",
+  "https://silkroad-kokand.uz/img/b63a22da30ca55fd.webp",
+  "https://silkroad-kokand.uz/img/caae39234b600613.webp",
+  "https://secure.exely.com/resource/thumb/1000x600/rt/5060669/638999277688422466-883cfc75-7d39-4359-b9db-ffdb534eadf1",
+  "https://silkroad-kokand.uz/img/a8860e6dde26e9b4.webp",
+  "https://secure.exely.com/resource/thumb/1000x600/rt/5060670/638999277706432664-7684dace-cc68-4104-9eff-23b2cc6f8a06",
+  "https://silkroad-kokand.uz/img/85fa85c762f56ec9.webp"
+];
+
+function App() {
+  const [lang, setLang] = useState("UZ");
+  const [loading, setLoading] = useState(true);
+  const [time, setTime] = useState("");
+
+  // 3D Parallax State (Kept only for background transformations)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const t = TRANSLATIONS[lang];
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2400);
+    const timeTimer = setInterval(() => {
+      setTime(new Date().toLocaleTimeString("uz-UZ", { hour: "2-digit", minute: "2-digit" }));
+    }, 1000);
+    return () => { clearTimeout(timer); clearInterval(timeTimer); };
+  }, []);
+
+  useEffect(() => {
+    const updateMouseObj = (e) => {
+      // 3D calculation logic for the background elements
+      const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+      const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+      setMousePos({ x, y });
+    };
+    window.addEventListener("mousemove", updateMouseObj);
+    return () => window.removeEventListener("mousemove", updateMouseObj);
+  }, []);
+
+  return (
+    <div className="elite-wrapper">
+
+      <AnimatePresence>
+        {loading && (
+          <motion.div key="loader" exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="preloader-3d">
+            <div className="logo-rotation-3d" />
+            <motion.h1 initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} style={{ position: "absolute", bottom: "40%", fontFamily: "var(--f-serif)", letterSpacing: "8px", color: "var(--primary)" }}>{t.brand}</motion.h1>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <nav className="nav-elite">
+        <div style={{ fontFamily: 'var(--f-serif)', fontSize: '1.2rem', fontWeight: 800, color: 'white', letterSpacing: '4px' }}>
+          SILK ROAD KOKAND
+        </div>
+        <div className="nav-links-elite">
+          {t.nav.map((link, i) => <a key={i} href="#" className="nav-link-item">{link}</a>)}
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "30px" }}>
+          <div style={{ display: "flex", gap: "10px" }}>
+            {["UZ", "RU", "EN"].map((l) => (
+              <span key={l} onClick={() => setLang(l)} style={{ cursor: "pointer", fontSize: "10px", fontWeight: 800, color: lang === l ? "var(--primary)" : "white", opacity: lang === l ? 1 : 0.4, transition: "0.4s" }}>{l}</span>
+            ))}
+          </div>
+          <a href="https://secure.exely.com/hotel/5060666" target="_blank" className="lux-btn">{t.reserve}</a>
+        </div>
+      </nav>
+
+      {/* 🕰 FLOATING ELEMENTS */}
+      <div className="social-vertical-fixed">
+        <Instagram size={18} style={{ cursor: 'pointer' }} />
+        <Facebook size={18} style={{ cursor: 'pointer' }} />
+        <Twitter size={18} style={{ cursor: 'pointer' }} />
+        <div className="social-line" />
+        <span style={{ writingMode: "vertical-rl", fontSize: "10px", opacity: 0.3, letterSpacing: "4px" }}>FOLLOW US</span>
+      </div>
+
+      <div className="local-widget-lux">
+        <Clock size={16} color="var(--primary)" /> <span>{time} {t.kokand}</span>
+      </div>
+
+      <section className="hero-intareo" style={{ perspective: "1500px" }}>
+
+        {/* 🌌 THE 3D DEPTH MAP PARALLAX BACKGROUND */}
+        <motion.div
+          style={{
+            position: "absolute", inset: "-60px", zIndex: -3,
+            transformStyle: "preserve-3d",
+            pointerEvents: "none"
+          }}
+          animate={{
+            rotateX: mousePos.y * -8, // 3D Camera Tilt Up/Down
+            rotateY: mousePos.x * 8,  // 3D Camera Tilt Left/Right
+            x: mousePos.x * -30,
+            y: mousePos.y * -30
+          }}
+          transition={{ type: "spring", stiffness: 60, damping: 30 }}
+        >
+          {/* Deep Atmosphere Layer */}
+          <div style={{
+            position: "absolute", inset: "-150px",
+            backgroundImage: `url("https://silkroad-kokand.uz/img/67782364611c65c5.webp")`,
+            backgroundSize: "cover", backgroundPosition: "center",
+            filter: "blur(12px) brightness(0.25)",
+            transform: "translateZ(-200px) scale(1.1)"
+          }} />
+
+          {/* Mid Focus Layer */}
+          <div style={{
+            position: "absolute", inset: "-50px",
+            backgroundImage: `url("https://silkroad-kokand.uz/img/67782364611c65c5.webp")`,
+            backgroundSize: "cover", backgroundPosition: "center",
+            filter: "brightness(0.35)",
+            transform: "translateZ(0px) scale(1.05)"
+          }} />
+
+          {/* 3D Foreground Gold Particles */}
+          {[...Array(20)].map((_, i) => (
+            <motion.div key={i} className="gold-particle"
+              animate={{
+                y: [0, -150], opacity: [0, 0.4, 0]
+              }}
+              transition={{ duration: 10 + (i % 5) * 3, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
+              style={{
+                left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`,
+                transform: `translateZ(${Math.random() * 400}px)`,
+                width: `${Math.random() * 5 + 3}px`, height: `${Math.random() * 5 + 3}px`
+              }}
+            />
+          ))}
+        </motion.div>
+
+        <div className="hero-overlay-dark" />
+
+        {/* ⚖️ RESTORED PROFESSIONAL BALANCED GRID WITH OPTICAL CENTER */}
+        <div className="container-lux" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "80px", alignItems: "center", position: "relative", zIndex: 10, width: "100%", transform: "translateY(-80px)" }}>
+
+          {/* 📝 LEFT: TEXT */}
+          <motion.div initial={{ opacity: 0, x: -60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5 }}>
+            <span style={{ fontSize: "12px", letterSpacing: "8px", color: "var(--primary)", fontWeight: 800, marginBottom: "20px", display: "block" }}>{t.heroSub}</span>
+
+            <h1 className="hero-title-intareo">
+              {/* 🔠 PREMIUM UPGRADE #1: ITALIC TYPOGRAPHY CONTRAST */}
+              {t.heroTitlePrefix} <span className="hero-italic-gold">{t.heroTitleGold}</span>
+            </h1>
+
+            <p style={{ fontSize: "1.4rem", opacity: 0.5, marginBottom: "50px", maxWidth: "550px", lineHeight: "1.8", fontWeight: 300 }}>{t.heroDesc}</p>
+
+            <div style={{ display: "flex", gap: "24px", marginBottom: "72px" }}>
+              <button className="lux-btn" style={{ padding: "18px 50px" }}>EXPLORE NOW</button>
+              {/* ▶️ PREMIUM UPGRADE #2: PULSING VIDEO BUTTON */}
+              <button style={{ background: "transparent", color: "white", padding: "10px 34px 10px 14px", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "40px", display: "flex", alignItems: "center", gap: "16px", cursor: "pointer", transition: "0.3s" }} className="video-btn-hover">
+                <div className="play-btn-pulse"><Play size={12} fill="white" style={{ marginLeft: "2px" }} /></div>
+                <span style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "2px" }}>WATCH VIDEO</span>
+              </button>
+            </div>
+
+            {/* 🪞 PREMIUM UPGRADE #3: FROSTED GLASS STATS */}
+            <div className="glass-stats-panel">
+              {t.stats.map((s, i) => (
+                <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.5 + i * 0.2 }}>
+                  <div style={{ fontSize: "2.4rem", fontWeight: 800, color: "var(--primary)" }}>{s.num}</div>
+                  <div style={{ fontSize: "10px", letterSpacing: "2px", opacity: 0.8, color: "white", textTransform: "uppercase" }}>{s.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* 🖼 RIGHT: THE PARALLAX MASTERPIECE IMAGE BLOCK */}
+          <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.5 }} style={{ position: "relative" }}>
+
+            {/* 1. Offset Wireframe Parallax */}
+            <motion.div
+              className="hero-image-wireframe"
+              animate={{ x: mousePos.x * -15, y: mousePos.y * -15 }}
+              transition={{ type: "spring", stiffness: 60, damping: 30 }}
+            >
+              {/* Orbital Satellite Flare */}
+              <div className="orbital-dot" />
+
+              {/* 3D Geometric Corners */}
+              <div className="corner-node corner-tl" />
+              <div className="corner-node corner-tr" />
+              <div className="corner-node corner-bl" />
+              <div className="corner-node corner-br" />
+            </motion.div>
+
+            {/* 2. Main Image Block with Vignette */}
+            <div className="hero-image-block">
+              <div className="hero-image-vignette" />
+              <img src="https://silkroad-kokand.uz/img/67782364611c65c5.webp" alt="Facade" />
+            </div>
+
+          </motion.div>
+        </div>
+
+        {/* ⬇️ PREMIUM UPGRADE #4: SCROLL TO DISCOVER INDICATOR */}
+        <div className="scroll-indicator-wrap">
+          <span className="scroll-text">DISCOVER ELITE</span>
+          <div className="scroll-line-container">
+            <div className="scroll-line-fill" />
+          </div>
+        </div>
+      </section>
+
+      {/* 🏨 ROOMS (LUXE) */}
+      <section id="rooms" className="booking-section">
+        <div className="container-lux">
+          <div style={{ textAlign: "center", marginBottom: "100px" }}>
+            <span style={{ fontSize: "11px", letterSpacing: "5px", fontWeight: 800, color: "var(--primary)", display: "block", marginBottom: "15px" }}>ULTRA-MODERN COLLECTION</span>
+            <h2 style={{ fontSize: "5rem", fontFamily: 'var(--f-serif)' }}>{t.roomsTitle}</h2>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "40px" }}>
+            {t.rooms.map((r, i) => (
+              <div className="booking-card-wrapper" key={i}>
+                <div className="booking-img-container"><img src={ROOM_IMAGES[i]} alt={r.name} /></div>
+                <div className="booking-content">
+                  <h3 className="booking-room-type">{r.name}</h3>
+                  <div style={{ display: "flex", gap: "20px", marginBottom: "20px", opacity: 0.6, fontSize: "13px" }}>
+                    <span><User size={14} style={{ marginBottom: "-3px", marginRight: "5px" }} /> {r.cap} {t.people}</span>
+                    <span><Maximize size={14} style={{ marginBottom: "-3px", marginRight: "5px" }} /> {r.area} m²</span>
+                  </div>
+                  <div className="price-main">{r.price} UZS</div>
+                  <button className="booking-cta-full">{t.checkPrice}</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <footer style={{ padding: "120px 0", textAlign: "center", background: "#fcfaf6", borderTop: "1px solid #eee" }}>
+        <div className="container-lux">
+          <h2 style={{ fontSize: "5rem", fontFamily: 'var(--f-serif)', color: "#1a1a1a" }}>SILK ROAD KOKAND</h2>
+          <div style={{ display: "flex", justifyContent: "center", gap: "60px", opacity: 0.5, marginTop: "40px", color: "#1a1a1a" }}>
+            <span>+998 73 543 33 66</span> <span>Turkiston ko'chasi, 57 A, Qo'qon</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
