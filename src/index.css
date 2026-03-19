@@ -2542,7 +2542,6 @@ body {
 .mobile-nav-link {
   font-family: var(--f-serif);
   font-size: 2.4rem;
-  color: white;
   text-decoration: none;
   transition: 0.3s;
 }
@@ -2550,6 +2549,228 @@ body {
 .mobile-nav-link:hover {
   color: var(--primary);
   padding-left: 10px;
+}
+
+/* --- ADMIN SURVEILLANCE & ROOMS --- */
+.cctv-card-lux {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+.cctv-card-lux:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-5px);
+  border-color: var(--primary);
+}
+
+.cctv-header {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.cctv-view-mock {
+  height: 180px;
+  background: #000;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cctv-timestamp {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: monospace;
+  font-size: 10px;
+  color: #0f0;
+  z-index: 2;
+}
+
+.cctv-signal-noise {
+  position: absolute;
+  inset: 0;
+  background: url('https://media.giphy.com/media/oEI9uWUicG7BK/giphy.gif');
+  background-size: cover;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.cctv-alert-overlay {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: #ff4d4d;
+  color: white;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 4px;
+  animation: pulse 1s infinite;
+}
+
+.cctv-footer {
+  padding: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.cctv-btn-min,
+.cctv-btn-min-icon {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 10px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cctv-btn-min:hover {
+  background: var(--primary);
+  color: black;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  background: #0f0;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #0f0;
+}
+
+.alert-pulse {
+  width: 6px;
+  height: 6px;
+  background: #f00;
+  border-radius: 50%;
+  animation: pulse 0.5s infinite;
+  box-shadow: 0 0 10px #f00;
+}
+
+/* Detailed Room Cards */
+.admin-room-detail-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 24px;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.admin-room-detail-card:hover {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.room-num-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  opacity: 0.3;
+  letter-spacing: 1px;
+}
+
+.meta-item-lux {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.inside-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 20px;
+}
+
+.inside-status-badge.active {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.future-booking-box {
+  background: rgba(194, 169, 139, 0.05);
+  border: 1px dashed rgba(194, 169, 139, 0.2);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.early-alert {
+  border-color: #ff4d4d;
+  box-shadow: 0 0 20px rgba(255, 77, 77, 0.1);
+}
+
+.early-check-toast {
+  background: #ff4d4d;
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.room-manage-btn-small {
+  background: var(--primary);
+  color: black;
+  border: none;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.room-cam-toggle {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 /* --- PREMIUM UI COMPONENTS --- */

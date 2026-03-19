@@ -7,7 +7,8 @@ import {
   Utensils, Droplets, MapPin, Bus, Soup, ParkingCircle, BellRing, Presentation,
   MessageSquare, UserCircle, Calendar, Bot, Award, Sparkles, Globe, LayoutDashboard,
   TrendingUp, Users, LogOut, Key, MousePointer2, CreditCard,
-  Hotel, Wallet, Settings, ArrowUpRight, ArrowDownRight, Activity, Menu
+  Hotel, Wallet, Settings, ArrowUpRight, ArrowDownRight, Activity, Menu,
+  Video, Eye, CalendarDays, AlertTriangle, CheckCircle2, Tent
 } from "lucide-react";
 
 import "./index.css";
@@ -158,7 +159,15 @@ const TRANSLATIONS = {
       staff: "Xodimlar holati",
       welcome: "Xush kelibsiz",
       updates: "Jonli yangilanishlar",
-      priority: "Ustuvorlik"
+      priority: "Ustuvorlik",
+      surveillance: "Kuzatuv (CCTV)",
+      roomStatus: "Xona Holati",
+      onlineCamera: "Onlayn Kamera",
+      clientActive: "Mijoz Xonada",
+      clientOut: "Mijoz Chiqqan",
+      bookingTill: "Bandlik muddati",
+      futureOrders: "Kelgusi buyurtmalar",
+      earlyBoosh: "Muddatidan oldin bo'shagan"
     }
   },
   RU: {
@@ -290,7 +299,15 @@ const TRANSLATIONS = {
       staff: "Статус персонала",
       welcome: "Добро пожаловать",
       updates: "Живые обновления",
-      priority: "Приоритет"
+      priority: "Приоритет",
+      surveillance: "Наблюдение (CCTV)",
+      roomStatus: "Статус Номера",
+      onlineCamera: "Онлайн Камера",
+      clientActive: "Клиент в номере",
+      clientOut: "Клиент вышел",
+      bookingTill: "Срок аренды",
+      futureOrders: "Будущие заказы",
+      earlyBoosh: "Освободился раньше"
     }
   },
   EN: {
@@ -880,8 +897,8 @@ function App() {
             <button key="rooms" onClick={() => setAdminTab("rooms")} className={`sidebar-item-lux ${adminTab === 'rooms' ? 'active' : ''}`}>
               <Hotel size={20} /> {t.admin.rooms}
             </button>
-            <button key="guests" onClick={() => setAdminTab("guests")} className={`sidebar-item-lux ${adminTab === 'guests' ? 'active' : ''}`}>
-              <Users size={20} /> {t.admin.guests}
+            <button key="surveillance" onClick={() => setAdminTab("surveillance")} className={`sidebar-item-lux ${adminTab === 'surveillance' ? 'active' : ''}`}>
+              <Video size={20} /> {t.admin.surveillance}
             </button>
             <button key="finances" onClick={() => setAdminTab("finances")} className={`sidebar-item-lux ${adminTab === 'finances' ? 'active' : ''}`}>
               <Wallet size={20} /> {t.admin.finances}
@@ -901,6 +918,40 @@ function App() {
 
         <main className="admin-main-viewport">
           <AnimatePresence mode="wait">
+            {adminTab === 'surveillance' && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} key="surv">
+                <h3 className="title-serif-huge" style={{ fontSize: '2rem', marginBottom: '32px' }}>{t.admin.surveillance}</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '30px' }}>
+                  {[
+                    { loc: "Main Entrance", status: "Live", id: "cam-01" },
+                    { loc: "Lobby East", status: "Live", id: "cam-02" },
+                    { loc: "Floor 4 Corridor", status: "Motion Detected", id: "cam-03", alert: true },
+                    { loc: "Restaurant Entrance", status: "Live", id: "cam-04" },
+                  ].map((cam, i) => (
+                    <div key={i} className="cctv-card-lux">
+                      <div className="cctv-header">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <div className={`status-dot ${cam.alert ? 'alert-pulse' : 'live-dot'}`} />
+                          <span style={{ fontSize: '11px', fontWeight: 700 }}>{cam.loc}</span>
+                        </div>
+                        <span style={{ fontSize: '10px', opacity: 0.5 }}>{cam.id}</span>
+                      </div>
+                      <div className="cctv-view-mock">
+                        <div className="cctv-timestamp">{new Date().toLocaleTimeString()}</div>
+                        <div className="cctv-signal-noise" />
+                        <Eye size={40} style={{ opacity: 0.1 }} />
+                        {cam.alert && <div className="cctv-alert-overlay">MOTION DETECTED</div>}
+                      </div>
+                      <div className="cctv-footer">
+                        <button className="cctv-btn-min">Expand</button>
+                        <button className="cctv-btn-min">Playback</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
             {adminTab === 'dashboard' && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }} key="dash">
                 <section className="manager-banner">
@@ -1020,16 +1071,60 @@ function App() {
             )}
 
             {adminTab === 'rooms' && (
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} key="rooms_v">
-                <header style={{ marginBottom: '40px' }}>
-                  <h2 style={{ fontSize: '2rem' }}>{t.admin.rooms} Management</h2>
-                  <p style={{ opacity: 0.5 }}>Real-time inventory and status control</p>
-                </header>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px' }}>
-                  {[...Array(15)].map((_, i) => (
-                    <div key={i} className="kpi-card-reborn" style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '10px' }}>10{i + 1}</div>
-                      <div className="status-badge-lux active" style={{ fontSize: '9px' }}>AVAILABLE</div>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} key="admin-rms-new">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
+                  <h3 className="title-serif-huge" style={{ fontSize: '2.4rem', margin: 0 }}>{t.admin.roomStatus}</h3>
+                  <div style={{ display: 'flex', gap: '20px' }}>
+                    <div className="status-badge-lux active">18 {lang === 'UZ' ? 'Band' : 'Занято'}</div>
+                    <div className="status-badge-lux pending">4 {lang === 'UZ' ? 'Bo\'sh' : 'Свободно'}</div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '25px' }}>
+                  {[
+                    { num: "402", title: "Superior Suite", guest: "Aziz Azizov", days: "5 kun", till: "24.03", status: "Active", inside: true, next: "25.03 - Mirzo" },
+                    { num: "105", title: "Deluxe King", guest: "Sardor Ahmedov", days: "2 kun", till: "21.03", status: "Active", inside: false, next: "None" },
+                    { num: "208", title: "Standard Twin", guest: "None", days: "0", till: "Free", status: "Cleaning", inside: false, next: "Today - Elena" },
+                    { num: "301", title: "Executive Suite", guest: "Umid Ibragimov", days: "Muddatidan oldin", till: "CHECKED OUT", status: "Early", inside: false, next: "Tonight - Smith" },
+                  ].map((rm, i) => (
+                    <div key={i} className={`admin-room-detail-card ${rm.status === 'Early' ? 'early-alert' : ''}`}>
+                      <div className="room-num-badge">#{rm.num}</div>
+                      <div className="room-main-info">
+                        <h4 style={{ margin: 0 }}>{rm.title}</h4>
+                        <p style={{ opacity: 0.5, fontSize: '12px', margin: '5px 0' }}>{rm.guest !== 'None' ? rm.guest : (rm.status === 'Cleaning' ? 'Tozalanmoqda...' : 'Bo\'sh')}</p>
+                      </div>
+
+                      <div className="room-meta-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', margin: '15px 0' }}>
+                        <div className="meta-item-lux">
+                          <Calendar size={12} />
+                          <span>{rm.till}</span>
+                        </div>
+                        <div className="meta-item-lux">
+                          <Clock size={12} />
+                          <span>{rm.days}</span>
+                        </div>
+                      </div>
+
+                      <div className={`inside-status-badge ${rm.inside ? 'active' : ''}`}>
+                        {rm.inside ? <User size={12} /> : <Eye size={12} />}
+                        <span>{rm.inside ? t.admin.clientActive : t.admin.clientOut}</span>
+                      </div>
+
+                      <div className="future-booking-box">
+                        <div style={{ fontSize: '10px', opacity: 0.4, marginBottom: '5px' }}>{t.admin.futureOrders}</div>
+                        <div style={{ fontSize: '11px', fontWeight: 600 }}>{rm.next}</div>
+                      </div>
+
+                      {rm.status === 'Early' && (
+                        <div className="early-check-toast">
+                          <AlertTriangle size={14} /> {t.admin.earlyBoosh}
+                        </div>
+                      )}
+
+                      <div className="room-card-actions" style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+                        <button className="cctv-btn-min-icon"><Video size={14} /></button>
+                        <button className="room-manage-btn-small" style={{ flex: 1 }}>{t.admin.priority}</button>
+                      </div>
                     </div>
                   ))}
                 </div>
