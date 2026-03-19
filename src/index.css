@@ -2512,8 +2512,8 @@ body {
 /* --- GRID LAYOUT CLASSES (REPLACING INLINE) --- */
 .hero-content-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 80px;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
   align-items: center;
   position: relative;
   z-index: 10;
@@ -2920,6 +2920,9 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
   width: max-content;
+  position: relative;
+  z-index: 10;
+  margin-top: 40px;
 }
 
 .stat-unit {
@@ -2943,10 +2946,7 @@ body {
   font-weight: 700;
 }
 
-.hero-visual-block {
-  position: relative;
-  z-index: 1;
-}
+/* Removed duplicate .hero-visual-block definition */
 
 .hero-image-vignette {
   position: relative;
