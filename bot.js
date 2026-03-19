@@ -1,9 +1,10 @@
-const { Telegraf, Markup } = require('telegraf');
+import { Telegraf, Markup } from 'telegraf';
 
 // Bot tokeni (foydalanuvchi tomonidan taqdim etilgan)
 const TOKEN = '8771174586:AAHDZ4e9tdzbFTqAwkfBRfraOfcyIMBC0kY';
 
 // WebApp URL (Vercel'da mehmonxona sayti joylashgan link)
+// MUHIM: Bu erni o'zingizning haqiqiy Vercel linkingiz bilan almashtiring!
 const WEB_APP_URL = 'https://silk-road-kokand.vercel.app';
 
 const bot = new Telegraf(TOKEN);
@@ -44,8 +45,10 @@ bot.telegram.setChatMenuButton({
     }
 });
 
+console.log('--- Bot Premium darajada ishga tushmoqda... ---');
+
 bot.launch().then(() => {
-    console.log('--- Bot Premium darajada ishga tushdi! ---');
+    console.log('--- Bot muvaffaqiyatli ishga tushdi! ---');
 });
 
 // Stop
