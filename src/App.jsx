@@ -748,6 +748,24 @@ function App() {
 
   const [chatStep, setChatStep] = useState(0); // 0: Name, 1: Dates, 2: Guests, 3: Children
 
+  // --- 2026 PREMIUM: Hyper-Personalized AI Memory ---
+  useEffect(() => {
+    const savedUser = localStorage.getItem('srk_user_profile');
+    if (savedUser) {
+      const parsed = JSON.parse(savedUser);
+      setUser(parsed);
+      setChatMessages(prev => [
+        ...prev,
+        { role: 'ai', text: `Xush kelibsiz, ${parsed.name}! Sizni yana ko'rib turganimizdan xursandmiz. O'tgan galgi balkonli xonamiz yana bo'sh, bron qilaylikmi?` }
+      ]);
+    }
+  }, []);
+
+  const saveUserProfile = (profile) => {
+    localStorage.setItem('srk_user_profile', JSON.stringify(profile));
+    setUser(profile);
+  };
+
   const handleSendMessage = () => {
     if (!chatInput.trim()) return;
     const userMsg = chatInput;
@@ -1228,6 +1246,21 @@ function App() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="cab-card-lux" style={{ marginTop: '30px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '40px' }}>
+                <div className="kpi-card-reborn" style={{ padding: '20px' }}>
+                  <div style={{ fontSize: '10px', opacity: 0.5 }}>STATUS</div>
+                  <div style={{ fontSize: '16px', fontWeight: 800, color: 'var(--primary)' }}>GOLD VIP</div>
+                </div>
+                <div className="kpi-card-reborn" style={{ padding: '20px' }}>
+                  <div style={{ fontSize: '10px', opacity: 0.5 }}>POINTS</div>
+                  <div style={{ fontSize: '16px', fontWeight: 800 }}>1,250 PTS</div>
+                </div>
+                <div className="kpi-card-reborn" style={{ cursor: 'pointer', border: '1px solid var(--primary)', padding: '20px' }} onClick={() => alert('Pasport rasmini yuklang...')}>
+                  <div style={{ fontSize: '10px', color: 'var(--primary)', fontWeight: 800 }}>FAST CHECK-IN</div>
+                  <div style={{ fontSize: '12px', fontWeight: 800 }}>VERIFY NOW</div>
+                </div>
+              </div>
+
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '30px' }}>
                 <h3>Recent Activity</h3>
                 <TrendingUp size={20} color="var(--primary)" />
@@ -1400,9 +1433,23 @@ function App() {
                       </select>
                     </div>
                   </div>
-                  <motion.button whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }} type="submit" className="booking-cta-full shimmer-btn" style={{ marginTop: '20px', padding: '22px', fontSize: '14px', letterSpacing: '2px' }}>
-                    {t.bookConfirm}
-                  </motion.button>
+                  <div style={{ marginTop: '30px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '30px' }}>
+                    <h4 style={{ color: 'var(--primary)', marginBottom: '15px', fontSize: '12px', letterSpacing: '2px' }}>TO'LOV USULI</h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '30px' }}>
+                      <button type="button" className="cctv-btn-min" style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                        <img src="https://click.uz/click/images/click-logo.png" style={{ height: '24px' }} alt="Click" />
+                        <span>CLICK</span>
+                      </button>
+                      <button type="button" className="cctv-btn-min" style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                        <img src="https://payme.uz/assets/images/payme-logo.svg" style={{ height: '24px', filter: 'brightness(10)' }} alt="Payme" />
+                        <span>PAYME</span>
+                      </button>
+                    </div>
+
+                    <motion.button whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }} type="submit" className="booking-cta-full shimmer-btn" style={{ padding: '22px', fontSize: '14px', letterSpacing: '2px', width: '100%' }}>
+                      {t.bookConfirm}
+                    </motion.button>
+                  </div>
                 </form>
               </div>
             </motion.div>
@@ -1471,6 +1518,7 @@ function App() {
             </div>
             <div className="ai-chat-input-wrap">
               <input type="text" className="ai-chat-input" placeholder={t.aiPh} value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyPress={e => e.key === 'Enter' && handleSendMessage()} />
+              <button className="ai-send-btn" style={{ background: 'rgba(255,255,255,0.05)', marginRight: '5px' }} onClick={() => alert('Ovozli xabar yozishni boshlang...')}><Mic size={18} color="var(--primary)" /></button>
               <button className="ai-send-btn" onClick={handleSendMessage}><Send size={18} color="#0d0d0d" /></button>
             </div>
           </motion.div>
