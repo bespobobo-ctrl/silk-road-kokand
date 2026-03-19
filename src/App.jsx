@@ -1855,13 +1855,34 @@ function App() {
       </footer>
       {isMobile && (
         <div className="mobile-bottom-nav">
-          {t.nav.map((link, i) => (
-            <a key={i} href={i === 1 ? "#services-horizontal" : i === 2 ? "#rooms" : (i === 3 ? "#contact" : "#")} className={`mobile-bottom-tab ${activeTab === i ? 'active' : ''}`}>
-              {i === 0 ? <Hotel size={20} /> : i === 1 ? <Activity size={20} /> : i === 2 ? <LayoutDashboard size={20} /> : <Phone size={20} />}
-              <span>{link}</span>
-              {activeTab === i && <motion.div layoutId="navDot" className="active-dot-lux" />}
-            </a>
-          ))}
+          <a href="#" className={`mobile-bottom-tab ${activeTab === 0 ? 'active' : ''}`}>
+            <Hotel size={20} />
+            <span>{t.nav[0]}</span>
+            {activeTab === 0 && <motion.div layoutId="navDot" className="active-dot-lux" />}
+          </a>
+          <a href="#services-horizontal" className={`mobile-bottom-tab ${activeTab === 1 ? 'active' : ''}`}>
+            <Activity size={20} />
+            <span>{t.nav[1]}</span>
+            {activeTab === 1 && <motion.div layoutId="navDot" className="active-dot-lux" />}
+          </a>
+
+          <div className="mobile-center-action" onClick={openBooking}>
+            <div className="action-circle-lux">
+              <Sparkles size={24} color="black" />
+            </div>
+            <span className="action-label-lux">{lang === 'UZ' ? 'BRON' : 'БРОНЬ'}</span>
+          </div>
+
+          <a href="#rooms" className={`mobile-bottom-tab ${activeTab === 2 ? 'active' : ''}`}>
+            <LayoutDashboard size={20} />
+            <span>{t.nav[2]}</span>
+            {activeTab === 2 && <motion.div layoutId="navDot" className="active-dot-lux" />}
+          </a>
+          <a href="#contact" className={`mobile-bottom-tab ${activeTab === 3 ? 'active' : ''}`}>
+            <Phone size={20} />
+            <span>{t.nav[3]}</span>
+            {activeTab === 3 && <motion.div layoutId="navDot" className="active-dot-lux" />}
+          </a>
         </div>
       )}
     </div>

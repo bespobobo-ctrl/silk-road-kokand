@@ -3321,6 +3321,47 @@ body {
   transform: scale(0.9);
 }
 
+.mobile-center-action {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.action-circle-lux {
+  width: 58px;
+  height: 58px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -35px;
+  /* Floats above the bar */
+  border: 4px solid #0d0d0d;
+  box-shadow: 0 10px 20px rgba(194, 169, 139, 0.3), 0 0 15px var(--primary-glow);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mobile-center-action:active .action-circle-lux {
+  transform: scale(0.8) translateY(5px);
+}
+
+.action-label-lux {
+  font-size: 9px;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: 1px;
+  margin-top: 6px;
+  background: rgba(194, 169, 139, 0.05);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
 /* Adjust footer for bottom nav */
 @media (max-width: 768px) {
   footer {
