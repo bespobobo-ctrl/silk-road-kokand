@@ -458,11 +458,33 @@ body {
 
 .hero-image-wireframe {
   position: absolute;
-  inset: -20px;
-  border: 1px solid rgba(194, 169, 139, 0.4);
-  border-radius: 34px;
+  inset: -25px;
+  border: 1px solid rgba(194, 169, 139, 0.3);
+  border-radius: 40px;
   pointer-events: none;
   z-index: 0;
+  animation: frame-glow 4s infinite alternate ease-in-out;
+}
+
+.hero-image-wireframe-inner {
+  position: absolute;
+  inset: -12px;
+  border: 1px dashed rgba(194, 169, 139, 0.2);
+  border-radius: 30px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes frame-glow {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.98);
+  }
+
+  100% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
 }
 
 .hero-slider-nav {
@@ -502,6 +524,17 @@ body {
   box-shadow: 0 0 15px 4px var(--primary), 0 0 30px 10px rgba(194, 169, 139, 0.6);
   z-index: 10;
   animation: orbit-path 12s linear infinite;
+}
+
+.orbital-dot-fast {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+  z-index: 10;
+  animation: orbit-path 8s linear infinite reverse;
 }
 
 @keyframes orbit-path {

@@ -1635,7 +1635,9 @@ function App() {
           <motion.div className="hero-visual-block" initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, delay: 0.3 }}>
             <div className="hero-image-vignette">
               <div className="hero-image-wireframe" />
+              <div className="hero-image-wireframe-inner" />
               <div className="orbital-dot" />
+              <div className="orbital-dot-fast" />
               <div className="corner-node corner-tl" />
               <div className="corner-node corner-tr" />
               <div className="corner-node corner-bl" />
