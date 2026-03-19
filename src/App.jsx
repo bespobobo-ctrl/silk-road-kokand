@@ -644,7 +644,21 @@ function App() {
   const [restImgIdx, setRestImgIdx] = useState(0);
   const [isBottomReached, setIsBottomReached] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const horizontalRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    // SDK TG
+    if (window.Telegram?.WebApp) {
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      tg.expand();
+      tg.headerColor = "#0d0d0d";
+    }
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // --- NEW PREMIUM STATES ---
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -1707,6 +1721,16 @@ function App() {
           </div>
         </div>
       </footer>
+      {isMobile && (
+        <div className="mobile-bottom-nav">
+          {t.nav.map((link, i) => (
+            <a key={i} href={i === 1 ? "#services-horizontal" : i === 2 ? "#rooms" : "#"} className="mobile-bottom-tab">
+              {i === 0 ? <Hotel size={20} /> : i === 1 ? <Activity size={20} /> : i === 2 ? <LayoutDashboard size={20} /> : <Phone size={20} />}
+              <span>{link}</span>
+            </a>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -2977,3 +2977,51 @@ body {
     color: var(--primary);
   }
 }
+
+/* MOBILE BOTTOM NAV - MINI APP FEEL */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(13, 13, 13, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(194, 169, 139, 0.2);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 9999;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.mobile-bottom-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: 0.3s;
+  flex: 1;
+}
+
+.mobile-bottom-tab span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.mobile-bottom-tab:hover,
+.mobile-bottom-tab.active {
+  color: var(--primary);
+}
+
+/* Adjust footer for bottom nav */
+@media (max-width: 768px) {
+  footer {
+    padding-bottom: 100px !important;
+  }
+}
