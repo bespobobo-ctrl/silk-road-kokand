@@ -107,6 +107,22 @@ body {
   animation: rota3d 3s linear infinite;
 }
 
+.preloader-title-lux {
+  margin-top: 40px;
+  font-family: var(--f-serif);
+  letter-spacing: 8px;
+  color: var(--primary);
+  text-align: center;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .preloader-title-lux {
+    letter-spacing: 4px;
+    font-size: 1.5rem;
+  }
+}
+
 @keyframes rota3d {
   0% {
     transform: rotateY(0deg);

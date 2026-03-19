@@ -1476,7 +1476,7 @@ function App() {
         {loading && (
           <motion.div key="loader" exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="preloader-3d">
             <div className="logo-rotation-3d" />
-            <motion.h1 style={{ position: "absolute", bottom: "40%", fontFamily: "var(--f-serif)", letterSpacing: "8px", color: "var(--primary)" }}>{t.brand}</motion.h1>
+            <motion.h1 className="preloader-title-lux">{t.brand}</motion.h1>
           </motion.div>
         )}
       </AnimatePresence>
