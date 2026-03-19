@@ -1372,14 +1372,14 @@ function App() {
         </div>
       </div>
 
-      <nav className="nav-elite" style={{ background: isScrolled ? "rgba(13,13,13,0.9)" : "transparent", borderColor: isScrolled ? "rgba(194, 169, 139, 0.2)" : "rgba(255,255,255,0.08)" }}>
-        <div className="nav-brand-elite" style={{ fontFamily: 'var(--f-serif)', fontSize: '1.2rem', fontWeight: 800, color: 'white', letterSpacing: '4px' }}>SILK ROAD KOKAND</div>
+      <nav className="nav-elite" style={{ background: isScrolled ? "rgba(13,13,13,0.9)" : "transparent" }}>
+        <div className="nav-brand-elite">SILK ROAD KOKAND</div>
         <div className="nav-links-elite">
           {t.nav.map((link, i) => (<a key={i} href={i === 1 ? "#services-horizontal" : i === 2 ? "#rooms" : "#"} className="nav-link-item">{link}</a>))}
         </div>
-        <div className="nav-actions-elite" style={{ display: "flex", alignItems: "center", gap: "30px" }}>
-          <div className="lang-switcher-elite" style={{ display: "flex", gap: "15px", alignItems: "center" }}>
-            {["UZ", "RU", "EN", "ZH"].map((l) => (<span key={l} onClick={() => setLang(l)} style={{ cursor: "pointer", fontSize: "10px", color: lang === l ? "var(--primary)" : "white" }}>{l}</span>))}
+        <div className="nav-actions-elite">
+          <div className="lang-switcher-elite">
+            {["UZ", "RU", "EN", "ZH"].map((l) => (<span key={l} onClick={() => setLang(l)} className={`lang-dot ${lang === l ? 'active' : ''}`}>{l}</span>))}
           </div>
           <div style={{ color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => setIsAuthModalOpen(true)}>
             <UserCircle size={24} color={user ? "var(--primary)" : "white"} />
@@ -1412,28 +1412,47 @@ function App() {
       {/* 🏛️ HERO */}
       <section className="hero-intareo">
         <motion.div style={{ position: "absolute", inset: "-60px", zIndex: -3, transformStyle: "preserve-3d", pointerEvents: "none" }} animate={{ rotateX: mousePos.y * -8, rotateY: mousePos.x * 8, x: mousePos.x * -30, y: mousePos.y * -30 }} transition={{ type: "spring", stiffness: 60, damping: 30 }}>
-          {HERO_IMAGES.map((img, i) => (<motion.div key={`m-${i}`} style={{ position: "absolute", inset: "-50px", backgroundImage: `url("${img}")`, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.35)" }} animate={{ opacity: currentImgIndex === i ? 1 : 0 }} transition={{ duration: 2.5 }} />))}
+          {HERO_IMAGES.map((img, i) => (<motion.div key={`m-${i}`} className="hero-bg-layer" style={{ backgroundImage: `url("${img}")` }} animate={{ opacity: currentImgIndex === i ? 1 : 0 }} transition={{ duration: 2.5 }} />))}
         </motion.div>
         <div className="hero-overlay-dark" />
         <div className="hero-content-grid container-lux">
-          <motion.div initial={{ opacity: 0, x: -60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5 }}>
-            <span style={{ fontSize: "12px", letterSpacing: "8px", color: "var(--primary)", fontWeight: 800 }}>{t.badgeLabel}</span>
+          <motion.div initial={{ opacity: 0, x: -60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5 }} className="hero-text-block">
+            <span className="hero-badge">{t.badgeLabel}</span>
             <h1 className="hero-title-intareo">{t.heroTitlePrefix} <span className="hero-italic-gold">{t.heroTitleGold}</span></h1>
-            <p style={{ fontSize: "1.4rem", opacity: 0.5, marginBottom: "50px", maxWidth: "550px" }}>{t.heroDesc}</p>
-            <div style={{ display: "flex", gap: "24px", marginBottom: "72px" }}>
-              <button className="lux-btn" style={{ padding: "18px 50px" }}>{t.explore}</button>
-              <button onClick={() => setIsVideoModalOpen(true)} className="video-btn-hover" style={{ background: "transparent", color: "white", padding: "10px 34px", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "40px", display: "flex", alignItems: "center", gap: "16px" }}><div className="play-btn-pulse"><Play size={12} fill="white" /></div><span style={{ fontSize: "10px", fontWeight: 800 }}>{t.watchVideo}</span></button>
+            <p>{t.heroDesc}</p>
+            <div className="hero-cta-group">
+              <button className="book-conf-btn pulse-glow" onClick={openBooking}>{t.reserve} <ChevronRight size={18} /></button>
+              <button onClick={() => setIsVideoModalOpen(true)} className="video-btn-lux">
+                <div className="play-icon-wrap"><Play size={12} fill="white" /></div>
+                <span>{t.watchVideo}</span>
+              </button>
             </div>
-            <div className="glass-stats-panel">
-              {t.stats.map((s, i) => (<div key={i}><div style={{ fontSize: "2.4rem", fontWeight: 800, color: "var(--primary)" }}>{s.num}</div><div style={{ fontSize: "10px", opacity: 0.8 }}>{s.label}</div></div>))}
+
+            <div className="glass-stats-panel-v2">
+              {t.stats.map((s, i) => (
+                <div key={i} className="stat-unit">
+                  <span className="stat-num">{s.num}</span>
+                  <span className="stat-label">{s.label}</span>
+                </div>
+              ))}
             </div>
           </motion.div>
-          <div style={{ position: "relative" }}>
-            <div className="hero-image-wireframe"><div className="orbital-dot" /><div className="corner-node corner-tl" /><div className="corner-node corner-tr" /><div className="corner-node corner-bl" /><div className="corner-node corner-br" /></div>
-            <div className="hero-image-block">
-              {HERO_IMAGES.map((img, i) => (<motion.img key={`h-${i}`} src={img} alt="Elite" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }} animate={{ opacity: currentImgIndex === i ? 1 : 0 }} transition={{ duration: 2.5 }} />))}
+
+          <motion.div className="hero-visual-block" initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, delay: 0.3 }}>
+            <div className="hero-image-vignette">
+              {HERO_IMAGES.map((img, i) => (
+                <motion.img
+                  key={`h-${i}`}
+                  src={img}
+                  alt="Luxury"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: currentImgIndex === i ? 1 : 0 }}
+                  transition={{ duration: 2.5 }}
+                />
+              ))}
+              <div className="vignette-overlay" />
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
