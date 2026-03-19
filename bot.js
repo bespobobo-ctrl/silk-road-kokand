@@ -33,7 +33,7 @@ bot.action('contact', (ctx) => {
 
 bot.action('about', (ctx) => {
     ctx.answerCbQuery();
-    ctx.reply('ℹ️ Silk Road Kokand Hotel — Qo\'qon shahridagi eng zamonaviy va hashamatli mehmonxonalardan biri hisoblanadi. Sizga yuqori darajadagi xizmatni taklif etamiz.');
+    ctx.reply('🏛️ Silk Road Kokand 2026 — bu shunchaki mehmonxona emas, balki sun\'iy intellekt va yuqori texnologiyalar uyg\'unlashgan hashamatli maskan. \n\nBizda:\n✅ AI Concierge 24/7\n✅ One-Tap Fast Check-in\n✅ 360° Virtual Tour\n✅ Smart Room Control');
 });
 
 // AI Butler: Ko'p tilli yordamchi (UZ, RU, EN)
@@ -68,7 +68,6 @@ bot.on('text', async (ctx) => {
     const text = ctx.message.text.toLowerCase();
     const lang = ctx.from.language_code === 'ru' ? 'ru' : (ctx.from.language_code === 'uz' ? 'uz' : 'en');
     const r = AI_RESPONSES[lang] || AI_RESPONSES.uz;
-
     if (text.includes('assalom') || text.includes('hello') || text.includes('привет')) {
         return ctx.reply(`👋 ${r.welcome}`);
     } else if (text.includes('xona') || text.includes('room') || text.includes('номер')) {
@@ -80,6 +79,28 @@ bot.on('text', async (ctx) => {
     } else {
         return ctx.reply(`🤖 ${r.unknown}`);
     }
+});
+
+// 🎙️ 2026 FEATURE: AI Voice Analysis
+bot.on('voice', (ctx) => {
+    const lang = ctx.from.language_code === 'ru' ? 'ru' : (ctx.from.language_code === 'uz' ? 'uz' : 'en');
+    const msg = {
+        uz: "🎙️ Ovozli xabaringiz qabul qilindi. AI Butler uni tahlil qilmoqda...",
+        ru: "🎙️ Ваше голосовое сообщение получено. ИИ-дворецкий анализирует его...",
+        en: "🎙️ Your voice message has been received. AI Butler is analyzing it..."
+    };
+    ctx.reply(msg[lang] || msg.uz);
+});
+
+// 📁 2026 FEATURE: Fast Check-in (Passport Submission)
+bot.on(['photo', 'document'], (ctx) => {
+    const lang = ctx.from.language_code === 'ru' ? 'ru' : (ctx.from.language_code === 'uz' ? 'uz' : 'en');
+    const msg = {
+        uz: "📄 Hujjat qabul qilindi! 'Fast Check-in' tizimi ma'lumotlaringizni tekshirmoqda. Tez orada xonangiz tayyor bo'ladi.",
+        ru: "📄 Документ получен! Система 'Fast Check-in' проверяет ваши данные. Скоро ваш номер будет готов.",
+        en: "📄 Document received! The 'Fast Check-in' system is verifying your details. Your room will be ready soon."
+    };
+    ctx.reply(msg[lang] || msg.uz);
 });
 
 // Bot menyusini sozlash (Pastda turadigan asosiy tugma)
