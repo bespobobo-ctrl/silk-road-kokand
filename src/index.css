@@ -2460,20 +2460,372 @@ body {
   max-width: 400px !important;
 }
 
+/* --- GRID LAYOUT CLASSES (REPLACING INLINE) --- */
+.hero-content-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  transform: translateY(-80px);
+}
+
+.rooms-intro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 40px;
+  row-gap: 10px;
+}
+
+.rooms-main-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.services-main-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* --- MOBILE MENU & RESPONSIVE UTILS --- */
+.mobile-menu-trigger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.98);
+  backdrop-filter: blur(20px);
+  z-index: 10000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobile-menu-content {
+  width: 100%;
+  max-width: 400px;
+  background: #0d0d0d;
+  height: 100%;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.close-mobile-menu {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.mobile-nav-link {
+  font-family: var(--f-serif);
+  font-size: 2.4rem;
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.mobile-nav-link:hover {
+  color: var(--primary);
+  padding-left: 10px;
+}
+
+/* --- MOBILE RESPONSIVENESS REBORN 2026 --- */
+
+@media (max-width: 1200px) {
+  .hero-content-grid {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container-lux {
+    padding: 0 40px;
+  }
+
+  .hero-title-intareo {
+    font-size: 4rem;
+  }
+
+  .admin-sidebar-lux {
+    width: 240px;
+  }
+
+  .rooms-intro-grid,
+  .rooms-main-grid,
+  .services-main-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
-  .admin-grid {
+  .container-lux {
+    padding: 0 20px;
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .mobile-menu-trigger {
+    display: flex;
+  }
+
+  /* Navigation Mobile */
+  .nav-elite {
+    width: calc(100% - 30px) !important;
+    height: 64px !important;
+    padding: 0 20px !important;
+    top: 15px !important;
+    border-radius: 20px !important;
+  }
+
+  .nav-links-elite {
+    display: none !important;
+  }
+
+  .nav-brand-elite {
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+  }
+
+  /* Hero Section Mobile */
+  .hero-title-intareo {
+    font-size: 3rem !important;
+    text-align: center !important;
+  }
+
+  .hero-intareo {
+    padding-top: 140px;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .hero-content-grid {
     grid-template-columns: 1fr;
+    transform: none;
+    text-align: center;
+    gap: 60px;
   }
 
-  .cab-container {
-    grid-template-columns: 1fr;
+  .hero-text-block {
+    text-align: center;
+    margin-bottom: 20px;
   }
 
-  .video-modal-overlay {
-    padding: 10px;
+  .glass-stats-panel {
+    padding: 20px !important;
+    gap: 20px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+    display: flex !important;
   }
 
-  .video-modal-container {
-    aspect-ratio: 9 / 16;
+  .hero-image-block {
+    height: 350px !important;
+    margin-top: 0 !important;
+  }
+
+  /* Sections Mobile */
+  .booking-section {
+    padding: 60px 0 !important;
+    border-radius: 40px 40px 0 0 !important;
+  }
+
+  .section-title-lux {
+    font-size: 2.2rem !important;
+    text-align: center;
+  }
+
+  .rooms-intro-grid,
+  .rooms-main-grid,
+  .services-main-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Grid Adjustments */
+  .admin-grid-lux {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Sidebar/Admin Mobile */
+  .admin-bg {
+    flex-direction: column !important;
+  }
+
+  .admin-sidebar-lux {
+    width: 100% !important;
+    height: auto !important;
+    padding: 20px !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    position: relative !important;
+  }
+
+  .admin-main-viewport {
+    padding: 20px !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+  }
+
+  .manager-banner {
+    padding: 24px !important;
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 20px !important;
+  }
+
+  /* Icons/Widgets Floating */
+  .social-vertical-fixed {
+    display: none !important;
+  }
+
+  .local-widget-lux {
+    display: none !important;
+  }
+
+  .cursor-aura {
+    display: none !important;
+  }
+
+  /* Cards Mobile */
+  .booking-card-wrapper {
+    margin-bottom: 30px !important;
+  }
+
+  .price-main {
+    font-size: 1.8rem !important;
+  }
+
+  /* Modals Mobile */
+  .auth-modal-content {
+    width: 90% !important;
+    padding: 30px !important;
+  }
+
+  .booking-modal-content {
+    width: 95% !important;
+    padding: 20px !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* Tables Mobile */
+  .table-container-2026 {
+    overflow-x: auto !important;
+    padding: 15px !important;
+  }
+
+  .lux-table-reborn {
+    min-width: 600px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title-intareo {
+    font-size: 2.2rem !important;
+  }
+
+  .section-title-lux {
+    font-size: 1.8rem !important;
+  }
+
+  .glass-stats-panel {
+    gap: 15px !important;
+    padding: 15px !important;
+  }
+
+  .stat-item-lux h2 {
+    font-size: 1.5rem !important;
+  }
+
+  .mobile-menu-content {
+    padding: 60px 20px !important;
+  }
+
+  .mobile-nav-link {
+    font-size: 1.8rem !important;
+  }
+}
+
+/* ADDITIONAL RESPONSIVE POLISH */
+@media (max-width: 1024px) {
+
+  .restaurant-split,
+  .contact-grid,
+  .modern-split-info {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .restaurant-section,
+  .contact-section {
+    padding: 60px 0 !important;
+  }
+
+  .restaurant-split,
+  .contact-grid,
+  .modern-split-info {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+    text-align: center;
+  }
+
+  .restaurant-gallery-side,
+  .restaurant-text-side {
+    width: 100%;
+  }
+
+  .rest-features {
+    text-align: left;
+    max-width: 400px;
+    margin: 40px auto 0 auto;
+  }
+
+  .contact-info-col {
+    order: 2;
+    text-align: left;
+  }
+
+  .contact-map-col {
+    order: 1;
+    height: 300px;
+  }
+
+  .map-placeholder {
+    min-height: 300px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
   }
 }

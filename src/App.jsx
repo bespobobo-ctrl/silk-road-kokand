@@ -7,7 +7,7 @@ import {
   Utensils, Droplets, MapPin, Bus, Soup, ParkingCircle, BellRing, Presentation,
   MessageSquare, UserCircle, Calendar, Bot, Award, Sparkles, Globe, LayoutDashboard,
   TrendingUp, Users, LogOut, Key, MousePointer2, CreditCard,
-  Hotel, Wallet, Settings, ArrowUpRight, ArrowDownRight, Activity
+  Hotel, Wallet, Settings, ArrowUpRight, ArrowDownRight, Activity, Menu
 } from "lucide-react";
 
 import "./index.css";
@@ -643,6 +643,7 @@ function App() {
   const [confImgIdx, setConfImgIdx] = useState(0);
   const [restImgIdx, setRestImgIdx] = useState(0);
   const [isBottomReached, setIsBottomReached] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const horizontalRef = useRef(null);
 
   // --- NEW PREMIUM STATES ---
@@ -1372,20 +1373,41 @@ function App() {
       </div>
 
       <nav className="nav-elite" style={{ background: isScrolled ? "rgba(13,13,13,0.9)" : "transparent", borderColor: isScrolled ? "rgba(194, 169, 139, 0.2)" : "rgba(255,255,255,0.08)" }}>
-        <div style={{ fontFamily: 'var(--f-serif)', fontSize: '1.2rem', fontWeight: 800, color: 'white', letterSpacing: '4px' }}>SILK ROAD KOKAND</div>
+        <div className="nav-brand-elite" style={{ fontFamily: 'var(--f-serif)', fontSize: '1.2rem', fontWeight: 800, color: 'white', letterSpacing: '4px' }}>SILK ROAD KOKAND</div>
         <div className="nav-links-elite">
           {t.nav.map((link, i) => (<a key={i} href={i === 1 ? "#services-horizontal" : i === 2 ? "#rooms" : "#"} className="nav-link-item">{link}</a>))}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "30px" }}>
-          <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+        <div className="nav-actions-elite" style={{ display: "flex", alignItems: "center", gap: "30px" }}>
+          <div className="lang-switcher-elite" style={{ display: "flex", gap: "15px", alignItems: "center" }}>
             {["UZ", "RU", "EN", "ZH"].map((l) => (<span key={l} onClick={() => setLang(l)} style={{ cursor: "pointer", fontSize: "10px", color: lang === l ? "var(--primary)" : "white" }}>{l}</span>))}
           </div>
           <div style={{ color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => setIsAuthModalOpen(true)}>
             <UserCircle size={24} color={user ? "var(--primary)" : "white"} />
           </div>
-          <button className="lux-btn" onClick={openBooking}>{t.reserve}</button>
+          <button className="lux-btn hide-mobile" onClick={openBooking}>{t.reserve}</button>
+          <button className="mobile-menu-trigger" onClick={() => setIsMobileMenuOpen(true)}>
+            <Menu size={24} color="white" />
+          </button>
         </div>
       </nav>
+
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div className="mobile-menu-overlay" initial={{ opacity: 0, x: "100%" }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: "100%" }} transition={{ type: "spring", damping: 25, stiffness: 200 }}>
+            <div className="mobile-menu-content">
+              <button className="close-mobile-menu" onClick={() => setIsMobileMenuOpen(false)}><X size={32} /></button>
+              <div className="mobile-menu-links">
+                {t.nav.map((link, i) => (
+                  <a key={i} href={i === 1 ? "#services-horizontal" : i === 2 ? "#rooms" : "#"} className="mobile-nav-link" onClick={() => setIsMobileMenuOpen(false)}>{link}</a>
+                ))}
+              </div>
+              <div style={{ marginTop: 'auto', padding: '40px 0', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                <button className="lux-btn" style={{ width: '100%' }} onClick={() => { setIsMobileMenuOpen(false); openBooking(); }}>{t.reserve}</button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* 🏛️ HERO */}
       <section className="hero-intareo">
@@ -1393,7 +1415,7 @@ function App() {
           {HERO_IMAGES.map((img, i) => (<motion.div key={`m-${i}`} style={{ position: "absolute", inset: "-50px", backgroundImage: `url("${img}")`, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.35)" }} animate={{ opacity: currentImgIndex === i ? 1 : 0 }} transition={{ duration: 2.5 }} />))}
         </motion.div>
         <div className="hero-overlay-dark" />
-        <div className="container-lux" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "80px", alignItems: "center", position: "relative", zIndex: 10, transform: "translateY(-80px)" }}>
+        <div className="hero-content-grid container-lux">
           <motion.div initial={{ opacity: 0, x: -60 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5 }}>
             <span style={{ fontSize: "12px", letterSpacing: "8px", color: "var(--primary)", fontWeight: 800 }}>{t.badgeLabel}</span>
             <h1 className="hero-title-intareo">{t.heroTitlePrefix} <span className="hero-italic-gold">{t.heroTitleGold}</span></h1>
@@ -1435,7 +1457,7 @@ function App() {
                 </p>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", columnGap: "40px", rowGap: "10px" }}>
+              <div className="rooms-intro-grid">
                 {t.roomsIntroList?.map((item, idx) => (
                   <motion.div
                     key={idx}
@@ -1457,7 +1479,7 @@ function App() {
               </div>
             </motion.div>
           )}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "40px" }}>
+          <div className="rooms-main-grid">
             {t.rooms.map((r, i) => (
               <PremiumRoomCard
                 key={i}
@@ -1483,7 +1505,7 @@ function App() {
               <h2 style={{ fontSize: "4.5rem", fontFamily: "var(--f-serif)", color: "white" }}>{t.servicesTitle}</h2>
               <p style={{ maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.7)" }}>{t.servicesIntro}</p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "30px", marginBottom: "40px" }}>
+            <div className="services-main-grid">
               {t.hotelServices.map((service, idx) => (
                 <div key={idx} className="service-card-premium">
                   <div className="service-icon-wrap">{service.icon}</div>
