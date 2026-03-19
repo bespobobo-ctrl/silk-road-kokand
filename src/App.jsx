@@ -659,15 +659,33 @@ function App() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [confImgIdx, setConfImgIdx] = useState(0);
   const [restImgIdx, setRestImgIdx] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
   const [isBottomReached, setIsBottomReached] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
   const horizontalRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const sections = ['#', '#services-horizontal', '#rooms', '#contact'];
+
+      sections.forEach((id, i) => {
+        const el = id === '#' ? document.querySelector('.hero-intareo') : document.querySelector(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.4 && rect.bottom > window.innerHeight * 0.4) {
+            setActiveTab(i);
+          }
+        }
+      });
+    };
+
     window.addEventListener('resize', handleResize);
-    // SDK TG
+    window.addEventListener('scroll', handleScroll);
+
     if (window.Telegram?.WebApp) {
       const tg = window.Telegram.WebApp;
       tg.ready();
@@ -675,7 +693,6 @@ function App() {
       tg.headerColor = "#0d0d0d";
       tg.backgroundColor = "#0d0d0d";
 
-      // Main Button Premium Integration
       tg.MainButton.setText("XONANI BRON QILISH");
       tg.MainButton.setParams({
         color: "#c2a98b",
@@ -684,7 +701,11 @@ function App() {
       tg.MainButton.onClick(() => setIsBookingOpen(true));
       tg.MainButton.show();
     }
-    return () => window.removeEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   // --- NEW PREMIUM STATES ---
@@ -1835,9 +1856,10 @@ function App() {
       {isMobile && (
         <div className="mobile-bottom-nav">
           {t.nav.map((link, i) => (
-            <a key={i} href={i === 1 ? "#services-horizontal" : i === 2 ? "#rooms" : "#"} className="mobile-bottom-tab">
+            <a key={i} href={i === 1 ? "#services-horizontal" : i === 2 ? "#rooms" : (i === 3 ? "#contact" : "#")} className={`mobile-bottom-tab ${activeTab === i ? 'active' : ''}`}>
               {i === 0 ? <Hotel size={20} /> : i === 1 ? <Activity size={20} /> : i === 2 ? <LayoutDashboard size={20} /> : <Phone size={20} />}
               <span>{link}</span>
+              {activeTab === i && <motion.div layoutId="navDot" className="active-dot-lux" />}
             </a>
           ))}
         </div>
