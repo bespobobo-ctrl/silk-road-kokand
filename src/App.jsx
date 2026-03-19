@@ -762,14 +762,20 @@ function App() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (authForm.username === 'admin' && authForm.password === 'admin') {
+    const uname = authForm.username.toLowerCase();
+    const upass = authForm.password;
+
+    if (uname === 'admin' && upass === 'admin') {
       setUser({ name: 'Admin', role: 'admin' });
       setView('admin');
+      setIsAuthModalOpen(false);
+    } else if (uname === 'admin' && upass !== 'admin') {
+      alert(lang === 'UZ' ? "Parol noto'g'ri (admin / admin)" : "Неверный пароль (admin / admin)");
     } else {
       setUser({ name: authForm.username || 'Mehmon', role: 'user' });
       setView('cabinet');
+      setIsAuthModalOpen(false);
     }
-    setIsAuthModalOpen(false);
   };
 
   const handleLogout = () => {
